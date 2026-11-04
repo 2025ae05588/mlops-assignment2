@@ -1,0 +1,1 @@
+The slowest v1 baseline request was Q1 at 29.775 seconds, with 628 output tokens and status success. Longer generation, network variation, connection establishment and provider queueing are possible causes; this experiment does not prove which caused the difference.

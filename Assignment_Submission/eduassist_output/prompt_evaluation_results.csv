@@ -1,0 +1,4 @@
+prompt_version,registry_version,run_id,avg_latency_seconds,avg_input_tokens,avg_output_tokens,avg_cost_per_request,avg_paid_equivalent_cost,valid_json,schema_valid,success_rate,projected_monthly_cost,paid_equivalent_monthly_cost,recommended
+v1,10,6a1f67a24a1442a0bd2622e50fa6ef58,17.826144895199832,20.6,548.2,0.0,0.00137668,0.0,0.0,1.0,0.0,13.7668,False
+v2,11,a519311dc73d4439bfe1c86b1dec00a8,18.69938486079918,44.6,392.8,0.0,0.0009953800000000001,0.0,0.0,1.0,0.0,9.953800000000001,False
+v3,12,d75b409938cf4646999e114daca1b425,12.440707723599918,85.6,141.2,0.0,0.00037868,1.0,1.0,1.0,0.0,3.7868,True

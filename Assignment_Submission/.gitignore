@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+*.db
+*.db-*
+*.log
+mlruns/
+mlartifacts/
+eduassist_output/previous_evaluations/
+eduassist_output/latest_retry_attempt.csv

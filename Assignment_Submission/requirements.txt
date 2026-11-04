@@ -1,0 +1,6 @@
+mlflow==3.5.1
+pandas==2.3.3
+SQLAlchemy==2.0.44
+python-dotenv==1.2.4
+certifi==2026.10.23
+ipykernel==6.30.1

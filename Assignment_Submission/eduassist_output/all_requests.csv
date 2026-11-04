@@ -1,0 +1,323 @@
+question_id,question,prompt_version,registry_version,model,start_time,status,input_tokens,output_tokens,total_tokens,cached_tokens,thinking_tokens,input_cost,output_cost,total_cost,paid_equivalent_cost,response,valid_json,schema_valid,finish_reason,http_status,error_type,end_time,latency_seconds
+Q1,What is overfitting in machine learning and how can it be reduced?,v1,10,gemini-3.5-flash-lite,2026-11-04T18:25:22.100808+00:00,success,24,628,652,0,0,0.0,0.0,0.0,0.0015772,"Here is a clear and simple explanation of **overfitting** in machine learning, along with ways to prevent it.
+
+---
+
+### **What is Overfitting?**
+
+**Overfitting** happens when a machine learning model learns the training data *too well*. 
+
+Instead of learning the general underlying patterns, the model memorizes the specific details—including the **noise** (random fluctuations) and **outliers** (unusual data points) in the training set. 
+
+* **The Analogy:** Imagine a student who memorizes the exact answers to last year’s math test instead of learning the formulas. When given a brand-new test with slightly different numbers, the student fails because they don't actually understand the concepts.
+* **The Result:** An overfitted model has **high accuracy on training data**, but **poor performance on new, unseen data (testing data)**. It lacks ""generalization.""
+
+---
+
+### **How to Reduce Overfitting**
+
+To prevent a model from overfitting, you want to discourage it from becoming too complex. Here are the most common techniques:
+
+#### **1. Use More Training Data**
+The easiest way to prevent overfitting is to feed the model more data. The more diverse examples the model sees, the harder it is for it to memorize the data, forcing it to learn generalized patterns instead.
+
+#### **2. Simplify the Model (Pruning / Fewer Parameters)**
+If a model is too complex (e.g., a deep neural network with millions of parameters or a high-degree polynomial), it can easily memorize noise. Reducing the complexity of the model helps it focus only on the most important trends.
+
+#### **3. Regularization (L1 and L2)**
+Regularization adds a ""penalty"" to the model's loss function for having overly large or complex coefficients. 
+* **L2 Regularization (Ridge):** Shrinks the coefficients of less important features close to zero.
+* **L1 Regularization (Lasso):** Can drive the coefficients of useless features completely to zero, effectively removing them.
+
+#### **4. Cross-Validation**
+Instead of using a single train/test split, use **K-Fold Cross-Validation**. This technique splits your data into multiple parts, trains the model on different combinations of the data, and validates it on the rest. This ensures your model's performance is consistent and not just a result of a lucky data split.
+
+#### **5. Dropout (for Neural Networks)**
+During training, ""dropout"" randomly turns off a percentage of neurons in a neural network at each step. This prevents neurons from co-adapting too much and forces the network to learn robust features through different pathways.
+
+#### **6. Early Stopping**
+When training an iterative model (like a Neural Network or Gradient Boosting), the model's performance on validation data improves up to a point, and then starts getting worse as it begins to overfit. **Early stopping** monitors the validation loss and halts the training process the moment it starts to increase.",0,0,STOP,200,,2026-11-04T18:25:51.876312+00:00,29.775392005998583
+Q2,Explain the difference between supervised and unsupervised learning.,v1,10,gemini-3.5-flash-lite,2026-11-04T18:26:06.878174+00:00,success,20,563,583,0,0,0.0,0.0,0.0,0.0014134999999999998,"Here is a clear and simple explanation of the difference between supervised and unsupervised learning:
+
+### **1. Supervised Learning**
+*   **The Concept:** The model is trained using **labeled data**. This means that for every input data point, the correct output (or ""answer"") is already provided to the algorithm. 
+*   **The Analogy:** Think of a student learning with a teacher. The teacher gives the student flashcards with pictures of animals *along with* the correct labels (""This is a cat,"" ""This is a dog""). The student learns by checking their guesses against the correct answers.
+*   **Common Tasks:** 
+    *   *Classification* (predicting a category/label, e.g., Is this email ""Spam"" or ""Not Spam""?).
+    *   *Regression* (predicting a continuous number, e.g., What will the price of a house be?).
+*   **Common Algorithms:** Linear Regression, Logistic Regression, Support Vector Machines (SVM), Random Forests.
+
+---
+
+### **2. Unsupervised Learning**
+*   **The Concept:** The model is trained using **unlabeled data**. The algorithm is given data without any instructions or correct answers, and it must figure out the underlying structure, patterns, or groupings on its own.
+*   **The Analogy:** Think of a student who is given a box of mixed-up Lego bricks of different colors and shapes, with no instructions. The student has to figure out how to group them on their own (e.g., putting all the red blocks together, or all the wheels together).
+*   **Common Tasks:** 
+    *   *Clustering* (grouping similar data points together, e.g., customer segmentation for marketing).
+    *   *Association* (discovering rules that describe large portions of data, e.g., people who buy diapers also tend to buy baby wipes).
+    *   *Dimensionality Reduction* (simplifying data without losing key information).
+*   **Common Algorithms:** K-Means Clustering, Principal Component Analysis (PCA), Hierarchical Clustering.
+
+---
+
+### **Summary Table**
+
+| Feature | Supervised Learning | Unsupervised Learning |
+| :--- | :--- | :--- |
+| **Data Type** | Labeled data (Input + Output) | Unlabeled data (Input only) |
+| **Main Goal** | To predict outcomes or classify data | To discover hidden patterns or structures |
+| **Human Supervision** | High (humans provide the ""correct answers"") | Low (the algorithm explores the data freely) |
+| **Complexity** | Generally easier to measure accuracy | Harder to evaluate performance objectively |",0,0,STOP,200,,2026-11-04T18:26:17.753199+00:00,10.874939369998174
+Q3,What is the purpose of cross-validation?,v1,10,gemini-3.5-flash-lite,2026-11-04T18:26:32.756593+00:00,success,20,391,411,0,0,0.0,0.0,0.0,0.0009835,"The main purpose of **cross-validation** is to evaluate how well a machine learning model will generalize to an independent, unseen dataset. It is primarily used to prevent **overfitting** and to ensure that the model's performance is reliable and robust.
+
+Here is a breakdown of why it is important and how it works:
+
+### 1. The Problem It Solves
+Normally, when you train a machine learning model, you split your data into a *training set* and a *testing set*. However, depending on which data happens to end up in the test set, your evaluation score can be overly optimistic or overly pessimistic. If you just train and test on the same data, the model might just memorize the answers (overfitting) rather than learning the underlying patterns.
+
+### 2. How It Works (K-Fold Cross-Validation)
+The most common method is **K-Fold Cross-Validation**:
+1. The dataset is divided into $K$ equal parts (or ""folds""—usually 5 or 10).
+2. The model is trained on $K-1$ folds and tested on the remaining 1 fold.
+3. This process is repeated $K$ times, so that every fold gets a turn to be the test set.
+4. The performance scores from all $K$ trials are then averaged to produce a single, reliable performance metric.
+
+### 3. Key Benefits
+* **Maximum Use of Data:** Every data point gets used for both training and testing, which is especially useful when working with small datasets.
+* **Reliable Performance Estimate:** Because the model is evaluated multiple times on different data subsets, the final score gives a much truer picture of how the model will perform in the real world.
+* **Hyperparameter Tuning:** It helps data scientists compare different models or find the best settings (hyperparameters) for a single model fairly.",0,0,STOP,200,,2026-11-04T18:26:52.061113+00:00,19.304459128001326
+Q4,Explain precision and recall with an example.,v1,10,gemini-3.5-flash-lite,2026-11-04T18:27:07.066213+00:00,success,19,723,742,0,0,0.0,0.0,0.0,0.0018132,"To understand **precision** and **recall**, it helps to use a practical, real-world example. 
+
+Imagine you are building an **AI spam filter** for your email inbox. The AI's job is to look at incoming emails and decide: *Is this spam (positive) or not spam (negative)?*
+
+Before defining the terms, let's look at the four possible outcomes when your AI makes a guess:
+1. **True Positive (TP):** The email is spam, and the AI correctly labels it as spam.
+2. **False Positive (FP):** The email is *not* spam, but the AI incorrectly labels it as spam (a ""False Alarm"").
+3. **True Negative (TN):** The email is not spam, and the AI correctly leaves it in your inbox.
+4. **False Negative (FN):** The email is spam, but the AI misses it and sends it to your inbox (a ""Miss"").
+
+---
+
+### 1. Precision (Quality over Quantity)
+**Precision answers the question:** *""Out of all the emails the AI **claimed** were spam, how many actually **were** spam?""*
+
+* **The Formula:** $\text{Precision} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Positives}}$
+
+* **Spam Filter Example:** Suppose the AI moves 10 emails into your spam folder. You check them and find that 8 of them are actually spam, but 2 of them were important emails from your boss. 
+  * **Precision** = $8 / 10 = 80\%$
+* **Why it matters:** High precision means that when the AI flags something, you can trust it. Low precision means a lot of ""false alarms"" (good emails getting trapped in spam).
+
+---
+
+### 2. Recall (Completeness)
+**Recall answers the question:** *""Out of all the **actual spam emails** that arrived in your inbox, how many did the AI manage to **catch**?""*
+
+* **The Formula:** $\text{Recall} = \frac{\text{True Positives}}{\text{True Positives} + \text{False Negatives}}$
+
+* **Spam Filter Example:** Suppose that today, a total of 20 spam emails were sent to your inbox. The AI successfully caught 15 of them and put them in the spam folder, but 5 spam emails slipped through the cracks and landed in your main inbox.
+  * **Recall** = $15 / 20 = 75\%$
+* **Why it matters:** High recall means the AI catches almost all the bad stuff. Low recall means too many threats or unwanted items are slipping past the system.
+
+---
+
+### Summary & The Trade-Off
+* **Precision** focuses on **false positives** (avoiding false alarms).
+* **Recall** focuses on **false negatives** (avoiding missed detections).
+
+In real life, there is usually a **trade-off** between the two:
+* If you make your spam filter super strict (high precision), you will never lose a good email in the spam folder, but you will let more spam slip into your inbox (lower recall).
+* If you make your filter overly aggressive to catch every single piece of spam (high recall), you will catch all the spam, but you will also accidentally trap more of your important emails (lower precision).",0,0,STOP,200,,2026-11-04T18:27:24.622990+00:00,17.556679986002564
+Q5,How does gradient descent minimize a loss function?,v1,10,gemini-3.5-flash-lite,2026-11-04T18:27:39.628090+00:00,success,20,436,456,0,0,0.0,0.0,0.0,0.001096,"Imagine you are standing on a foggy mountain and your goal is to reach the lowest point (the valley). Because of the fog, you can't see the bottom, but you can feel the slope of the ground right where you are standing. 
+
+**Gradient descent** works in the exact same way to minimize a machine learning model's loss function (which measures how ""wrong"" the model's predictions are). 
+
+Here is the step-by-step process of how it works:
+
+### 1. Start at a Random Point
+The process begins with random guesses for the model's parameters (the weights and biases). This puts you at a random starting location on the ""loss landscape"" (the mountain).
+
+### 2. Calculate the Gradient (The Slope)
+The algorithm calculates the **gradient** at your current position. In calculus, a gradient is a vector that points in the direction of the **steepest ascent** (straight uphill). 
+* Because we want to go *down* to minimize the loss, we want to move in the **opposite** direction of the gradient.
+
+### 3. Take a Step Downhill
+The model updates its parameters by taking a small step in the opposite direction of the gradient. 
+* **Learning Rate:** The size of this step is controlled by a setting called the *learning rate*. 
+    * If the learning rate is too **large**, you might step right over the valley and never reach the bottom.
+    * If it is too **small**, it will take forever to get down the mountain.
+
+### 4. Repeat Until Convergence
+Steps 2 and 3 are repeated over and over again in a loop (called epochs or iterations). With each step, the loss gets smaller and smaller until you reach the bottom of the valley—the point where the slope is zero (flat) and the loss is at its minimum. 
+
+***
+
+### Summary
+In short, gradient descent minimizes a loss function by **repeatedly calculating the slope of the error and taking small steps in the downward direction** until it finds the lowest possible error.",0,0,STOP,200,,2026-11-04T18:27:51.247439+00:00,11.619253985998512
+Q1,What is overfitting in machine learning and how can it be reduced?,v2,11,gemini-3.5-flash-lite,2026-11-04T18:28:06.251338+00:00,success,48,429,477,0,0,0.0,0.0,0.0,0.0010869,"**What is Overfitting?**
+
+**Overfitting** happens when a machine learning model learns the training data *too well*. Instead of learning the general underlying patterns, it memorizes the specific details and even the random noise in the training set. 
+
+* **The Result:** The model performs exceptionally well on the data it was trained on, but performs poorly on new, unseen data (it lacks ""generalization""). 
+* **Analogy:** Imagine a student who memorizes the exact answers to a practice test instead of learning the concepts. When the actual exam has slightly different questions, the student fails.
+
+---
+
+**How Can Overfitting Be Reduced?**
+
+Here are the most common ways to prevent and reduce overfitting:
+
+1. **Use More Training Data:** 
+   Providing the model with more data helps it distinguish between true patterns and random noise.
+
+2. **Simplify the Model (Regularization):** 
+   Complex models (like a high-degree polynomial) have too many parameters, making them prone to memorization. Techniques like **Lasso (L1) and Ridge (L2) regularization** add a penalty to the model for being too complex.
+
+3. **Cross-Validation:** 
+   Instead of using a single train-test split, use techniques like *k-fold cross-validation*. This splits your data into multiple parts to ensure the model performs consistently across different subsets of data.
+
+4. **Early Stopping:** 
+   When training an iterative model (like a neural network), monitor its performance on a validation set. Stop training the moment its performance on the validation set starts to get worse, even if it continues improving on the training set.
+
+5. **Dropout (for Neural Networks):** 
+   Randomly ""turn off"" a percentage of neurons during the training phase. This prevents the network from relying too heavily on any single neuron and forces it to learn robust features.
+
+6. **Feature Selection:** 
+   Remove irrelevant, redundant, or noisy input variables (features) so the model focuses only on the most important information.",0,0,STOP,200,,2026-11-04T18:28:38.998055+00:00,32.75836191599956
+Q2,Explain the difference between supervised and unsupervised learning.,v2,11,gemini-3.5-flash-lite,2026-11-04T18:28:54.001004+00:00,success,44,322,366,0,0,0.0,0.0,0.0,0.0008182,"Here is the difference between supervised and unsupervised learning, broken down simply:
+
+*   **Supervised Learning** is like learning with a teacher. You provide the computer with **labeled data**—meaning the data comes with the correct answers. The goal is for the computer to learn the relationship between the input data and the correct output so it can predict answers for new, unseen data.
+    *   *Real-world example:* Teaching an AI to recognize photos of cats by showing it thousands of pictures explicitly labeled as ""cat"" or ""not a cat.""
+    *   *Common uses:* Classification (sorting things into categories) and Regression (predicting numbers, like house prices).
+
+*   **Unsupervised Learning** is like learning on your own without a teacher. You provide the computer with **unlabeled data**—data with no correct answers or instructions attached. The goal is for the computer to explore the data on its own and find hidden patterns, similarities, or structures.
+    *   *Real-world example:* Feeding an AI a million customer shopping carts without telling it anything about the customers, and letting it automatically group them into similar shopping styles.
+    *   *Common uses:* Clustering (grouping similar items) and Association (finding rules that connect data, like what products are often bought together).
+
+**In short:** 
+*   **Supervised** = Learning with *labeled* data (you give the answers).
+*   **Unsupervised** = Learning with *unlabeled* data (the computer finds the answers/patterns on its own).",0,0,STOP,200,,2026-11-04T18:28:56.429947+00:00,2.4289970969985006
+Q3,What is the purpose of cross-validation?,v2,11,gemini-3.5-flash-lite,2026-11-04T18:29:11.434591+00:00,success,44,197,241,0,0,0.0,0.0,0.0,0.0005057,"The main purpose of **cross-validation** is to evaluate how well a machine learning model will generalize to an independent, unseen dataset. 
+
+In simple terms, it helps you check if your model has actually learned the underlying patterns in the data, or if it has simply **memorized** the training data (a problem known as *overfitting*).
+
+Here is how it works basically:
+1. Instead of training your model on all your data and testing it once, you split your data into several parts (or ""folds"").
+2. You train the model on most of those parts and test it on the remaining part.
+3. You repeat this process so that every part gets a chance to be the test set.
+4. Finally, you average the results to get a reliable score of your model's performance.
+
+**In short:** Cross-validation gives you a trustworthy estimate of how accurate your model will be when used in the real world.",0,0,STOP,200,,2026-11-04T18:29:38.075081+00:00,26.64072864099944
+Q4,Explain precision and recall with an example.,v2,11,gemini-3.5-flash-lite,2026-11-04T18:29:53.079315+00:00,success,43,669,712,0,0,0.0,0.0,0.0,0.0016853999999999999,"As an academic assistant, I would be happy to explain precision and recall using a simple, relatable example. 
+
+In machine learning and statistics, **precision** and **recall** are two metrics used to evaluate how well a classification model (or a prediction system) is working. 
+
+To understand both, let's use a real-world scenario: **An AI spam filter for your email.**
+
+### Definitions
+*   **Precision (Quality):** Out of all the emails the AI *flagged as spam*, how many were *actually spam*? 
+    *   *Focus:* Avoiding false alarms (false positives).
+*   **Recall (Quantity):** Out of *all the actual spam emails* that existed in your inbox, how many did the AI *manage to catch*? 
+    *   *Focus:* Not missing any target items (false negatives).
+
+---
+
+### The Example
+
+Imagine you receive **100 emails** in a day. 
+*   **20** of them are actual spam.
+*   **80** of them are important emails (not spam).
+
+Your AI spam filter runs and flags **15 emails** as spam. Let's break down those 15 emails:
+*   **10** of them were *actually* spam (True Positives).
+*   **5** of them were actually important emails that the AI *mistakenly* labeled as spam (False Positives).
+
+Meanwhile, the AI let **10 actual spam emails** slip through into your normal inbox (False Negatives).
+
+---
+
+### Calculating the Metrics
+
+#### 1. Precision Formula & Calculation
+$$\text{Precision} = \frac{\text{True Positives}}{\text{Total Predicted Positives}}$$
+
+$$\text{Precision} = \frac{10 \text{ (correctly caught spam)}}{15 \text{ (total emails the AI labeled as spam)}} = \frac{10}{15} = 0.67 \text{ or } 67\%$$
+
+*   **Meaning:** When the AI says an email is spam, it is right 67% of the time. 
+
+#### 2. Recall Formula & Calculation
+$$\text{Recall} = \frac{\text{True Positives}}{\text{Total Actual Positives}}$$
+
+$$\text{Recall} = \frac{10 \text{ (correctly caught spam)}}{20 \text{ (total actual spam emails that existed)}} = \frac{10}{20} = 0.50 \text{ or } 50\%$$
+
+*   **Meaning:** The AI successfully caught 50% of all the actual spam that arrived in your inbox.
+
+---
+
+### Summary
+*   **High Precision** means fewer false alarms (you won't lose important emails to the spam folder).
+*   **High Recall** means the model catches almost everything you are looking for (very few spam emails make it to your inbox). 
+
+Usually, there is a trade-off: if you try to catch *everything* (high recall), your AI will likely get trigger-happy and increase false alarms (lower precision).",0,0,STOP,200,,2026-11-04T18:30:09.381833+00:00,16.302507644999423
+Q5,How does gradient descent minimize a loss function?,v2,11,gemini-3.5-flash-lite,2026-11-04T18:30:24.386106+00:00,success,44,347,391,0,0,0.0,0.0,0.0,0.0008807,"Gradient descent is an optimization algorithm used to find the minimum of a loss function (which represents the error or mistake of a model). 
+
+Imagine you are standing on a foggy mountain and want to reach the lowest valley. Since you can't see the whole landscape, you use a simple strategy: **feel the slope of the ground beneath your feet and take a step downward in the steepest direction.** If you repeat this process over and over, you will eventually reach the bottom of the valley.
+
+Here is how that translates to math and machine learning:
+
+1. **Calculate the Gradient:** The algorithm calculates the ""gradient"" at the model's current position. In calculus, the gradient is a vector that points in the direction of the *steepest ascent* (uphill). 
+2. **Take a Step Downhill:** To minimize the loss, the algorithm goes in the *opposite* direction of the gradient (downhill).
+3. **Control the Step Size (Learning Rate):** The size of the step you take is determined by a hyperparameter called the **learning rate**. 
+   * If the learning rate is **too large**, you might step right over the bottom of the valley and miss it.
+   * If it is **too small**, it will take forever to get down the mountain.
+4. **Repeat:** The model updates its parameters (weights and biases) and repeats steps 1–3. 
+
+The process stops when the steps become extremely small, meaning the algorithm has reached the bottom of the valley (the minimum loss), where the slope is flat (gradient is close to zero). At this point, the model is as accurate as it can be.",0,0,STOP,200,,2026-11-04T18:30:39.752535+00:00,15.366329004998988
+Q1,What is overfitting in machine learning and how can it be reduced?,v3,12,gemini-3.5-flash-lite,2026-11-04T18:30:54.755671+00:00,success,89,168,257,0,0,0.0,0.0,0.0,0.0004467,"{
+  ""answer"": ""Overfitting in machine learning occurs when a model learns the training data too well, capturing noise and random fluctuations rather than the underlying pattern, which leads to poor generalization on unseen data. It can be reduced by using more training data, applying regularization techniques like L1 and L2, utilizing dropout in neural networks, performing cross-validation, and simplifying the model architecture."",
+  ""confidence"": ""high"",
+  ""key_points"": [
+    ""Captures noise and details from training data instead of general patterns"",
+    ""Results in poor performance on unseen/test data"",
+    ""Mitigated by regularization (L1/L2)"",
+    ""Mitigated by increasing training data size"",
+    ""Mitigated by cross-validation and early stopping""
+  ]
+}",1,1,STOP,200,,2026-11-04T18:30:56.313922+00:00,1.558188049999444
+Q2,Explain the difference between supervised and unsupervised learning.,v3,12,gemini-3.5-flash-lite,2026-11-04T18:31:11.318885+00:00,success,85,107,192,0,0,0.0,0.0,0.0,0.000293,"{
+  ""answer"": ""Supervised learning uses labeled data to train models to predict outcomes or classify inputs, whereas unsupervised learning uses unlabeled data to discover hidden patterns, structures, or groupings within the data."",
+  ""confidence"": ""high"",
+  ""key_points"": [
+    ""Supervised learning requires labeled training data."",
+    ""Unsupervised learning works with unlabeled data."",
+    ""Supervised tasks include classification and regression."",
+    ""Unsupervised tasks include clustering and association.""
+  ]
+}",1,1,STOP,200,,2026-11-04T18:31:38.251282+00:00,26.93240957499802
+Q3,What is the purpose of cross-validation?,v3,12,gemini-3.5-flash-lite,2026-11-04T18:31:53.255678+00:00,success,85,105,190,0,0,0.0,0.0,0.0,0.000288,"{
+  ""answer"": ""Cross-validation is a statistical method used to evaluate the performance and generalizability of a machine learning model by partitioning the data into subsets, training the model on some subsets, and validating it on the remaining ones."",
+  ""confidence"": ""high"",
+  ""key_points"": [
+    ""Evaluates model generalizability on unseen data"",
+    ""Mitigates overfitting"",
+    ""Maximizes the utilization of available data for training and testing""
+  ]
+}",1,1,STOP,200,,2026-11-04T18:32:05.323757+00:00,12.068057049000345
+Q4,Explain precision and recall with an example.,v3,12,gemini-3.5-flash-lite,2026-11-04T18:32:20.328671+00:00,success,84,190,274,0,0,0.0,0.0,0.0,0.0005002,"{
+  ""answer"": ""Precision is the ratio of true positive predictions to the total predicted positives, measuring the accuracy of positive identifications. Recall is the ratio of true positives to the actual total positives in the dataset, measuring the ability to find all positive instances. For example, in a medical test for a disease, high precision means that when the test says a patient is sick, it is almost certainly correct. High recall means the test successfully identifies nearly all patients who actually have the disease, even if it results in some false alarms."",
+  ""confidence"": ""high"",
+  ""key_points"": [
+    ""Precision measures the exactness of positive predictions (True Positives / Predicted Positives)."",
+    ""Recall measures the completeness of positive predictions (True Positives / Actual Positives)."",
+    ""There is often a trade-off between precision and recall depending on the classification threshold.""
+  ]
+}",1,1,STOP,200,,2026-11-04T18:32:31.137442+00:00,10.80870446300105
+Q5,How does gradient descent minimize a loss function?,v3,12,gemini-3.5-flash-lite,2026-11-04T18:32:46.141856+00:00,success,85,136,221,0,0,0.0,0.0,0.0,0.00036550000000000005,"{
+  ""answer"": ""Gradient descent minimizes a loss function by iteratively calculating the gradient (derivative) of the loss function with respect to the model parameters, and then updating those parameters in the direction opposite to the gradient. This process steps down the error surface toward a local or global minimum."",
+  ""confidence"": ""high"",
+  ""key_points"": [
+    ""Calculates the gradient of the loss function with respect to parameters"",
+    ""Updates parameters in the opposite direction of the gradient"",
+    ""Uses a learning rate to determine the size of each step"",
+    ""Repeats iteratively until convergence at a minimum""
+  ]
+}",1,1,STOP,200,,2026-11-04T18:32:56.978072+00:00,10.836179481000727
